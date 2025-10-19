@@ -1,12 +1,21 @@
 
 // import './App.css'
 
+import Footer from "./components/Footer/Footer"
+import HeroSection from "./components/HeroSection/HeroSection"
+import Navbar from "./components/Navbar/Navbar"
+import Table from "./components/Table/Table"
+
 function App() {
 
   return (
     <>
-    <p className="text-3xl font-bold underline">This is my app</p>
-        
+      <Navbar />
+      <div className="flex flex-col justify-center items-center">
+        <HeroSection />
+        <Table />
+      </div>
+      <Footer />
     </>
   )
 }
