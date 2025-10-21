@@ -5,9 +5,6 @@ import TableList from "./TableList";
 import TaskModal from "./TaskModal";
 
 const Table = () => {
-    // const [tasks, setTasks] = useState(defaultTask);
-    const [showModal, setShowModal] = useState(false);
-
     const defaultTask = {
         id: crypto.randomUUID(),
         title: "Learn React",
@@ -17,23 +14,38 @@ const Table = () => {
         isFavorite: false,
     }
 
-    const handleAddTask = () => {
-        // console.log('clicked add task');
-        setShowModal(true);
-        
 
+    const [tasks, setTasks] = useState([defaultTask]);
+    const [showModal, setShowModal] = useState(false);
+
+
+
+    const handleAddTask = (newTask) => {
+        setTasks([...tasks, newTask])
+    }
+
+    const handleCloseClick = () => {
+        setShowModal(false);
+        handleCloseClick()
     }
 
     return (
         <section className="mb-20" id="tasks">
-            {showModal && <TaskModal />}
+            {showModal && (
+                <TaskModal
+                    onSave={handleAddTask}
+                    onCloseClick={handleCloseClick}
+                />
+            )}
             <div className="container">
                 {/* <!-- Search Box --> */}
                 <Search />
                 {/* <!-- Search Box Ends --> */}
                 <div className="rounded-xl border border-[rgba(206,206,206,0.12)] bg-[#1D212B] px-6 py-8 md:px-9 md:py-16">
-                    <TableActions onAddClick={handleAddTask} />
-                    <TableList />
+                    <TableActions
+                        onAddClick={() => setShowModal(true)}
+                    />
+                    <TableList tasks={tasks} />
                 </div>
             </div>
         </section>
