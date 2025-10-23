@@ -21,12 +21,12 @@ const Table = () => {
 
 
     const handleAddTask = (newTask) => {
-        setTasks([...tasks, newTask])
+        setTasks([...tasks, newTask]);
+        handleCloseClick()
     }
 
     const handleCloseClick = () => {
         setShowModal(false);
-        handleCloseClick()
     }
 
     return (
