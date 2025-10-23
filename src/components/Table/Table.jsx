@@ -17,24 +17,43 @@ const Table = () => {
 
     const [tasks, setTasks] = useState([defaultTask]);
     const [showModal, setShowModal] = useState(false);
+    const [taskToUpdate, setTaskToUpdate] = useState(null);
 
 
 
-    const handleAddTask = (newTask) => {
-        setTasks([...tasks, newTask]);
+    const handleAddTask = (newTask, isAdd) => {
+        if (isAdd) {
+            setTasks([...tasks, newTask]);
+        } else {
+            const editedTask = tasks.map(task => {
+                if (task.id === newTask.id) {
+                    return newTask;
+                }
+                return task;
+            })
+
+            setTasks(editedTask)
+        }
+
         handleCloseClick()
     }
 
     const handleCloseClick = () => {
         setShowModal(false);
+        setTaskToUpdate(null)
     }
 
+    const handleEditTask = (task) => {
+        setTaskToUpdate(task)
+        setShowModal(true);
+    }
     return (
         <section className="mb-20" id="tasks">
             {showModal && (
                 <TaskModal
                     onSave={handleAddTask}
                     onCloseClick={handleCloseClick}
+                    taskToUpdate={taskToUpdate}
                 />
             )}
             <div className="container">
@@ -45,7 +64,10 @@ const Table = () => {
                     <TableActions
                         onAddClick={() => setShowModal(true)}
                     />
-                    <TableList tasks={tasks} />
+                    <TableList
+                        tasks={tasks}
+                        onEdit={handleEditTask}
+                    />
                 </div>
             </div>
         </section>

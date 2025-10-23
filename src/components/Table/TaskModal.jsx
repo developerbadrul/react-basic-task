@@ -1,8 +1,8 @@
 import { useState } from "react";
 
-const TaskModal = ({ onSave, onCloseClick }) => {
+const TaskModal = ({ onSave, onCloseClick, taskToUpdate }) => {
 
-    const [task, setTask] = useState({
+    const [task, setTask] = useState(taskToUpdate || {
         id: crypto.randomUUID(),
         title: "",
         description: "",
@@ -10,6 +10,8 @@ const TaskModal = ({ onSave, onCloseClick }) => {
         priority: "",
         isFavorite: false,
     })
+
+    const [isAdd] = useState(Object.is(taskToUpdate, null));
 
     const handleChange = (e) => {
         const name = e.target.name;
@@ -34,7 +36,7 @@ const TaskModal = ({ onSave, onCloseClick }) => {
                 <h2
                     className="mb-9 text-center text-2xl font-bold text-white lg:mb-11 lg:text-[28px]"
                 >
-                    Add New Task
+                    {taskToUpdate ? "Edit Task" : "Add New Task"}
                 </h2>
 
                 <div className="space-y-9 text-white lg:space-y-10">
@@ -72,7 +74,7 @@ const TaskModal = ({ onSave, onCloseClick }) => {
                                 className="block w-full rounded-md bg-[#2D323F] px-3 py-2.5"
                                 type="text"
                                 name="tags"
-                                value={task.tags}
+                                value={task.tags.join(',')}
                                 onChange={handleChange}
                                 id="tags"
                                 required
@@ -107,11 +109,11 @@ const TaskModal = ({ onSave, onCloseClick }) => {
                         type="submit"
                         onClick={(e) => {
                             e.preventDefault()
-                            onSave(task)
+                            onSave(task, isAdd)
                         }}
                         className="rounded bg-blue-600 px-4 py-2 text-white transition-all hover:opacity-80"
                     >
-                        Create new Task
+                        Save
                     </button>
                 </div>
             </form>
