@@ -47,6 +47,11 @@ const Table = () => {
         setTaskToUpdate(task)
         setShowModal(true);
     }
+
+    const handleDeleteTask = (taskId) => {
+        const tasksAfterDelete = tasks.filter(task => task.id !== taskId);
+        setTasks(tasksAfterDelete)
+    }
     return (
         <section className="mb-20" id="tasks">
             {showModal && (
@@ -67,6 +72,7 @@ const Table = () => {
                     <TableList
                         tasks={tasks}
                         onEdit={handleEditTask}
+                        onDelete={handleDeleteTask}
                     />
                 </div>
             </div>

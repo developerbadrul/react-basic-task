@@ -1,6 +1,6 @@
 
 
-const TableList = ({ tasks, onEdit }) => {
+const TableList = ({ tasks, onEdit, onDelete }) => {
     return (
         <div className="overflow-auto">
             <table className="table-fixed overflow-auto xl:w-full">
@@ -50,6 +50,7 @@ const TableList = ({ tasks, onEdit }) => {
                                 <td>
                                     <div className="flex items-center justify-center space-x-3">
                                         <button
+                                            onClick={() => onDelete(task.id)}
                                             className="text-red-500">
                                             Delete
                                         </button>
