@@ -56,6 +56,15 @@ const Table = () => {
     const handleDeleteAllClick = () => {
         setTasks([]);
     }
+
+    const handleSearch = (searchTerm) => {
+        const filtered = tasks.filter(task => task.title.toLowerCase().includes(searchTerm.toLowerCase()))
+
+        console.log(filtered);
+
+
+        setTasks([...filtered])
+    }
     return (
         <section className="mb-20" id="tasks">
             {showModal && (
@@ -67,7 +76,7 @@ const Table = () => {
             )}
             <div className="container">
                 {/* <!-- Search Box --> */}
-                <Search />
+                <Search onSearch={handleSearch} />
                 {/* <!-- Search Box Ends --> */}
                 <div className="rounded-xl border border-[rgba(206,206,206,0.12)] bg-[#1D212B] px-6 py-8 md:px-9 md:py-16">
                     <TableActions
