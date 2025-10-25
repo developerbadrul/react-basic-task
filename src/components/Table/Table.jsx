@@ -11,7 +11,7 @@ const Table = () => {
         description: "I want to Learn React such thanI can treat it like my slave and make it do whatever I want to do.",
         tags: ["web", "react", "js"],
         priority: "High",
-        isFavorite: false,
+        isFavorite: true,
     }
 
 
@@ -59,11 +59,16 @@ const Table = () => {
 
     const handleSearch = (searchTerm) => {
         const filtered = tasks.filter(task => task.title.toLowerCase().includes(searchTerm.toLowerCase()))
-
-        console.log(filtered);
-
-
         setTasks([...filtered])
+    }
+
+    const handleFavorite = (taskId) => {
+        setTasks(tasks.map(task => {
+            if (task.id === taskId) {
+                return { ...task, isFavorite: !task.isFavorite }
+            }
+            return task
+        }))
     }
     return (
         <section className="mb-20" id="tasks">
@@ -87,6 +92,7 @@ const Table = () => {
                         tasks={tasks}
                         onEdit={handleEditTask}
                         onDelete={handleDeleteTask}
+                        onFav={handleFavorite}
                     />
                 </div>
             </div>
