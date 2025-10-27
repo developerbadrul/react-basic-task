@@ -3,23 +3,12 @@ import Search from "../Search/Search";
 import TableActions from "./TableActions";
 import TableList from "./TableList";
 import TaskModal from "./TaskModal";
+import EmptyTable from "./EmptyTable";
 
 const Table = () => {
-    const defaultTask = {
-        id: crypto.randomUUID(),
-        title: "Learn React",
-        description: "I want to Learn React such thanI can treat it like my slave and make it do whatever I want to do.",
-        tags: ["web", "react", "js"],
-        priority: "High",
-        isFavorite: true,
-    }
-
-
-    const [tasks, setTasks] = useState([defaultTask]);
+    const [tasks, setTasks] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [taskToUpdate, setTaskToUpdate] = useState(null);
-
-
 
     const handleAddTask = (newTask, isAdd) => {
         if (isAdd) {
@@ -88,13 +77,15 @@ const Table = () => {
                         onAddClick={() => setShowModal(true)}
                         onDeleteAllClick={handleDeleteAllClick}
                     />
-                    <TableList
+                    {tasks.length > 0 ? (< TableList
                         tasks={tasks}
                         onEdit={handleEditTask}
                         onDelete={handleDeleteTask}
                         onFav={handleFavorite}
-                    />
+                    />) : <EmptyTable />
+                    }
                 </div>
+
             </div>
         </section>
     );
